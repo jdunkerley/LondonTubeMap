@@ -1,0 +1,19 @@
+{
+  "name": "london-tubemap-aws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "James Dunkerley <jdunkerley@scottlogic.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-amplify": "^0.4.4",
+    "aws-amplify-react": "^0.1.50",
+    "next": "^6.0.3",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "preexport": "next build",
+    "export": "next export"
+  }
+}

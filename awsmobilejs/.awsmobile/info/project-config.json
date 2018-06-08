@@ -1,0 +1,6 @@
+{
+	"SourceDir": ".",
+	"DistributionDir": "out",
+	"BuildCommand": "npm.cmd run-script export",
+	"StartCommand": "npm.cmd run dev"
+}
