@@ -77,6 +77,8 @@ class Index extends React.Component {
             svg.setAttribute('viewBox', `${dim[0]} ${dim[1]} ${this.width} ${this.width * bBox[1] / bBox[0]}`)
             console.log(svg.getAttribute('viewBox'))
         }
+
+        this.gamma = undefined
     }
 
     componentDidMount = () => {
@@ -90,10 +92,10 @@ class Index extends React.Component {
                     this.gamma = ev.gamma
                 }
 
-                if (ev.gamma - this.gamma > 30) this.svgMoveViewPort(10, 0)
-                if (ev.gamma - this.gamma < -30) this.svgMoveViewPort(-10, 0)
-                if (ev.beta - this.beta > 30) this.svgMoveViewPort(0, 10)
-                if (ev.beta - this.beta < -30) this.svgMoveViewPort(0, -10)
+                if (ev.gamma - this.gamma > 10) this.svgMoveViewPort(5 + (ev.gamma - this.gamma) / 80 * 20, 0)
+                if (ev.gamma - this.gamma < -10) this.svgMoveViewPort(-5 + (ev.gamma - this.gamma) / 80 * 20, 0)
+                if (ev.beta - this.beta > 10) this.svgMoveViewPort(0, 5 + (ev.beta - this.beta) / 80 * 20)
+                if (ev.beta - this.beta < -10) this.svgMoveViewPort(0, -5 + (ev.beta - this.beta) / 80 * 20)
             })
          }
         window.addEventListener('keydown', this.handleKeyPress)

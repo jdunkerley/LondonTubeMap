@@ -1,3 +1,4 @@
+Name,X,Y,Line
 Kilburn Park,789,538.5,bakerloo
 Maida Vale,815,558,bakerloo
 Warwick Avenue,841,577.5,bakerloo
@@ -14,11 +15,11 @@ North Acton,483,703.9,central
 East Acton,580,723.9,central
 Holland Park,806,723.9,central
 Queensway,930,723.9,central
-Lancaster Gate,996,691central
+Lancaster Gate,996,691,central
 Marble Arch,1048,652,central
 Chancery Lane,1330,520,central
 St Pauls,1410,540,central
-Bethnal Green central,1660,452,central
+Bethnal Green,1660,452,central
 Leyton,1947,214,central
 Snaresbrook,1926,106,central
 South Woodford,1926,76,central
@@ -38,49 +39,49 @@ Hainault,2111,42,central
 Grange Hill,2076,10,central
 Chigwell,2018.5,10,central
 Roding Valley,1961,10,central
-Bayswater district,1020.3,723.9,district
-Bayswater circle,1020.3,723.9,circle
-High Street Kensington circle,1020.3,723.9,circle
-High Street Kensington district,1020.3,723.9,district
-Sloane Square district,1136,819,district
-Sloane Square circle,1133,815,circle
-St Jamess Park district,1210,763.5,district
-St Jamess Park circle,1207,759.5,circle
-Temple circle,1336,663,circle
-Temple district,1339,667,district
-Mansion House circle,1400,615,circle
-Mansion House district,1403,619,district
-Great Portland Street hnc,1111,461.5,hnc
-Great Portland Street circle,1114,465.5,circle
-Great Portland Street metropolitan,1117,469.5,metropolitan
-Royal Oak circle,800,620,circle
-Royal Oak hnc,800,615,hnc
-Westbourne Park hnc,722.5,641,hnc
-Westbourne Park circle,725.5,645,circle
-Ladbroke Grove circle,689.5,672,circle
-Ladbroke Grove hnc,686.5,668,hnc
-Latimer Road hnc,652.5,693.5,hnc
-Latimer Road circle,655.5,697.5,circle
-Shepherds Bush Market circle,639.5,772.9,circle
-Shepherds Bush Market hnc,634.5,772.9,hnc
-Goldhawk Road circle,639.5,802.9,circle
-Goldhawk Road hnc,634.5,802.9,hnc
+Bayswater,1020.3,723.9,district
+Bayswater,1020.3,723.9,circle
+High Street Kensington,1020.3,723.9,circle
+High Street Kensington,1020.3,723.9,district
+Sloane Square,1136,819,district
+Sloane Square,1133,815,circle
+St Jamess Park,1210,763.5,district
+St Jamess Park,1207,759.5,circle
+Temple,1336,663,circle
+Temple,1339,667,district
+Mansion House,1400,615,circle
+Mansion House,1403,619,district
+Great Portland Street,1111,461.5,hnc
+Great Portland Street,1114,465.5,circle
+Great Portland Street,1117,469.5,metropolitan
+Royal Oak,800,620,circle
+Royal Oak,800,615,hnc
+Westbourne Park,722.5,641,hnc
+Westbourne Park,725.5,645,circle
+Ladbroke Grove,689.5,672,circle
+Ladbroke Grove,686.5,668,hnc
+Latimer Road,652.5,693.5,hnc
+Latimer Road,655.5,697.5,circle
+Shepherds Bush Market,639.5,772.9,circle
+Shepherds Bush Market,634.5,772.9,hnc
+Goldhawk Road,639.5,802.9,circle
+Goldhawk Road,634.5,802.9,hnc
 Chiswick Park,475,800.5,district
-Turnham Green district,521,835,district
+Turnham Green,521,835,district
 Stamford Brook,545,853,district
 Ravenscourt Park,587,869.4,district
-Barons Court district,705,869.4,district
+Barons Court,705,869.4,district
 West Kensington,780,869.4,district
-Stepney Green district,1755.5,494,district
-Stepney Green hnc,1752.5,490,hnc
-Bromley-by-Bow hnc,1963,431.5,hnc
-Bromley-by-Bow district,1963,436.5,district
-Plaistow district,2071,426.5,district
-Plaistow hnc,2068,422.5,hnc
-Upton Park district,2101,404,district
-Upton Park hnc,2098,400,hnc
-East Ham district,2131,381.5,district
-East Ham hnc,2128,377.5,hnc
+Stepney Green,1755.5,494,district
+Stepney Green,1752.5,490,hnc
+Bromley-by-Bow,1963,431.5,hnc
+Bromley-by-Bow,1963,436.5,district
+Plaistow,2071,426.5,district
+Plaistow,2068,422.5,hnc
+Upton Park,2101,404,district
+Upton Park,2098,400,hnc
+East Ham,2131,381.5,district
+East Ham,2128,377.5,hnc
 Upney,2191,336.5,district
 Becontree,2221,314,district
 Dagenham Heathway,2251,291.5,district
@@ -176,8 +177,8 @@ Osterley,280,857.5,piccadilly
 Boston Manor,310,835,piccadilly
 Northfields,340,812.5,piccadilly
 South Ealing,370,790,piccadilly
-Turnham Green piccadilly,530,823,piccadilly
-Barons Court piccadilly,705,854.4,piccadilly
+Turnham Green,530,823,piccadilly
+Turnham Green,705,854.4,piccadilly
 Knightsbridge,1114.6,766,piccadilly
 Hyde Park Corner,1114.6,726,piccadilly
 Covent Garden,1250,549.25,piccadilly
@@ -193,21 +194,21 @@ Arnos Grove,1245,6.5,piccadilly
 Southgate,1215,-16,piccadilly
 Oakwood,1185,-38.5,piccadilly
 Cockfosters,1155,-60,piccadilly
-Uxbridge piccadilly,20,299,piccadilly
-Uxbridge metropolitan,20,294,metropolitan
-Hillingdon metropolitan,60,294,metropolitan
-Hillingdon piccadilly,60,299,piccadilly
-Ruislip piccadilly,180,299,piccadilly
-Ruislip metropolitan,180,294,metropolitan
-Ruislip Manor metropolitan,220,294,metropolitan
-Ruislip Manor piccadilly,220,299,piccadilly
-Eastcote piccadilly,260,299,piccadilly
-Eastcote metropolitan,260,294,metropolitan
-Tottenham Hale,1530,113,#intnr
+Uxbridge,20,299,piccadilly
+Uxbridge,20,294,metropolitan
+Hillingdon,60,294,metropolitan
+Hillingdon,60,299,piccadilly
+Ruislip,180,299,piccadilly
+Ruislip,180,294,metropolitan
+Ruislip Manor,220,294,metropolitan
+Ruislip Manor,220,299,piccadilly
+Eastcote,260,299,piccadilly
+Eastcote,260,294,metropolitan
+Tottenham Hale,1530,113,victoria
 Pimlico,1206,826,victoria
 Vauxhall,1236,866,victoria
 Brixton,1305,958,victoria
-Limehouse,1747,585,#intnr
+Limehouse,1747,585,dlr
 Westferry,1800,585,dlr
 Blackwall,1940,585,dlr
 East India,1980,585,dlr
@@ -240,63 +241,63 @@ West Silvertown,2092,605,dlr
 Pontoon Dock,2132,635,dlr
 London City Airport,2172,665,dlr
 King George V,2212,695,dlr
-Watford Junction,531.5,20,#intnr
-Watford High Street,531.5,50,#int
-Bushey,534,95,#intnr
+Watford Junction,531.5,20,og
+Watford High Street,531.5,50,og
+Bushey,534,95,og
 Carpenders Park,534,131,og
 Hatch End,534,167,og
 Headstone Lane,534,203,og
 Kilburn High Road,862,501.5,og
 South Hampstead,924,455,og
 Imperial Wharf,910,981,og
-Clapham Junction,1098.333,981,#intnr
-Kew Gardens district,401,875.4,district
+Clapham Junction,1098.333,981,og
+Kew Gardens,401,875.4,district
 Kew Gardens overground,398,871.4,og
 South Acton,510.5,786.5,og
 Acton Central,540.5,764,og
 Kensal Rise,748.5,427,og
 Brondesbury Park,782.5,401.5,og
 Hampstead Heath,979.5,270,og
-Gospel Oak,1030,221,#int
+Gospel Oak,1030,221,og
 Caledonian Road and Barnsbury,1315,295,og
-Canonbury,1505,300,#int
+Canonbury,1505,300,og
 Homerton,1760,295,og
 Hackney Wick,1840,295,og
 Crouch Hill,1206,138,og
-Harringay Green Lanes,1326,138,#intnr
+Harringay Green Lanes,1326,138,og
 Leyton Midland Road,1860,138,og
-Renwick Road,2280,433,ogx
-Barking Riverside,2390,433,ogx
+Renwick Road,2280,433,og
+Barking Riverside,2390,433,og
 Haggerston,1588.625,369,og
 Hoxton,1606.625,393,og
 Shoreditch High Street,1624.625,417,og
 Wapping,1700,622.5,og
 Rotherhithe,1700,652.5,og
 Surrey Quays,1700,730,og
-New Bermondsey,1644,827,ogx
-Queens Road Peckham,1584,872,#intnr
-Peckham Rye,1524,917,#intnr
-Denmark Hill,1440,946,#intnr
+New Bermondsey,1644,827,og
+Queens Road Peckham,1584,872,og
+Peckham Rye,1524,917,og
+Denmark Hill,1440,946,og
 Wandsworth Road,1180,946,og
-Battersea Park,1110,946,#intnr
-New Cross,1744.67,818.5,#intnr
-New Cross Gate,1700,852,#intnr
+Battersea Park,1110,946,og
+New Cross,1744.67,818.5,og
+New Cross Gate,1700,852,og
 Brockley,1700,887,og
 Honor Oak Park,1684,919,og
 Forest Hill,1644,949,og
-Sydenham,1604,979,#intnr
-Crystal Palace,1514,1009,#intnr
+Sydenham,1604,979,og
+Crystal Palace,1514,1009,og
 Penge West,1524,1039,og
 Anerley,1484,1069,og
-Norwood Junction,1444,1099,#intnr
-West Croydon,1404,1129,#intnr
+Norwood Junction,1444,1099,og
+West Croydon,1404,1129,og
 Enfield Town,1403,-61.5,og
 Bush Hill Park,1403,-31.5,og
-Cheshunt,1509,-91,#intnr
+Cheshunt,1509,-91,og
 Theobalds Grove,1479,-68.5,og
 Turkey Street,1449,-46,og
 Southbury,1419,-23.5,og
-Edmonton Green,1403,8.5,#intnr
+Edmonton Green,1403,8.5,og
 Silver Street,1403,31,og
 White Hart Lane,1403,53.5,og
 Bruce Grove,1403,76,og
@@ -312,32 +313,32 @@ Wood Street,1682,83,og
 St James Street,1682,170,og
 Clapton,1682,210,og
 Emerson Park,2330.25,149,og
-South Kenton bakerloo,547,357,bakerloo
-North Wembley bakerloo,575,378,bakerloo
-Stonebridge Park bakerloo,631,420,bakerloo
-Harlesden bakerloo,659,441,bakerloo
-Kensal Green bakerloo,725,490.5,bakerloo
+South Kenton,547,357,bakerloo
+North Wembley,575,378,bakerloo
+Stonebridge Park,631,420,bakerloo
+Harlesden,659,441,bakerloo
+Kensal Green,725,490.5,bakerloo
 South Kenton overground,550,353,og
 North Wembley overground,578,374,og
 Stonebridge Park overground,634,416,og
 Harlesden overground,662,437,og
 Kensal Green overground,728,486.5,og
 Heathrow Central,105,936.5,tflrail
-Reading,0,480,#intnrx
-Twyford,0,510,#intnrx
-Maidenhead,0,540,#intnrx
-Taplow,0,570,crossrailx
-Burnham,0,600,crossrailx
-Slough,0,630,#intnrx
-Langley,0,660,crossrailx
-Iver,36,723.9,crossrailx
-West Drayton,86,723.9,crossrailx
-Hayes and Harlington,160,723.9,#intnr
+Reading,0,480,crossrail
+Twyford,0,510,crossrail
+Maidenhead,0,540,crossrail
+Taplow,0,570,crossrail
+Burnham,0,600,crossrail
+Slough,0,630,crossrail
+Langley,0,660,crossrail
+Iver,36,723.9,crossrail
+West Drayton,86,723.9,crossrail
+Hayes and Harlington,160,723.9,crossrail
 Southall,200,723.9,tflrail
 Hanwell,240,723.9,tflrail
-West Ealing,294.667,723.9,#intnr
+West Ealing,294.667,723.9,tflrail
 Acton Main Line,460,723.9,tflrail
-Abbey Wood,2353.33,704,#intnr
+Abbey Wood,2353.33,704,crossrail
 Maryland,2013,301,tflrail
 Ilford,2137,208,tflrail
 Seven Kings,2167,185.5,tflrail
@@ -346,7 +347,7 @@ Chadwell Heath,2227,140.5,tflrail
 Gidea Park,2287,95.5,tflrail
 Harold Wood,2317,73,tflrail
 Brentwood,2347,50.5,tflrail
-Shenfield,2377,28,#intnr
-South Greenford,224,554,greenfordx
-Castle Bar Park,224,594,greenfordx
-Drayton Green,224,634,greenfordx
+Shenfield,2377,28,tflrail
+South Greenford,224,554,tflrail
+Castle Bar Park,224,594,tflrail
+Drayton Green,224,634,tflrail
