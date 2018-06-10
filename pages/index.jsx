@@ -8,6 +8,7 @@ class Index extends React.Component {
         this.ws = null
         this.playerId = 0
         this.sessionId = Math.random()*1000000
+        this.otherPlayes = []
     }
 
     render = () => {
@@ -42,7 +43,7 @@ class Index extends React.Component {
             this.maxY = dim[3] + dim[1]
             console.log(this)
         }
-        return dim;
+        return dim
     }
 
     svgObjectLoad = () => {
@@ -112,7 +113,7 @@ class Index extends React.Component {
         //setting up websocket
         this.ws = new WebSocket("ws://localhost:7070/game/" + this.sessionId)
         this.ws.onopen = event => {
-            console.log('connection established');
+            console.log('connection established')
         }
         this.ws.onmessage = messageEvent => {
             console.log("got message: "+messageEvent.data)
@@ -123,15 +124,19 @@ class Index extends React.Component {
             }
             if(messageJSON.otherPlayerId){           
                 console.log("drawing player: "+messageJSON.otherPlayerId)
-                var svgns = "http://www.w3.org/2000/svg";
+                if(this.otherPlayes[messageJSON.otherPlayerId]) {
+                    this.otherPlayes[messageJSON.otherPlayerId].remove()
+                }
+                var svgns = "http://www.w3.org/2000/svg"
                 const current = this.svgObject.current
                 const svg = current.contentDocument.querySelector('svg')
-                var shape = document.createElementNS(svgns, "circle");
-                shape.setAttributeNS(null, "cx", messageJSON.dim[0]);
-                shape.setAttributeNS(null, "cy", messageJSON.dim[1]);
-                shape.setAttributeNS(null, "r",  20);
-                shape.setAttributeNS(null, "fill", "green");
-                svg.appendChild(shape);
+                var shape = document.createElementNS(svgns, "circle")
+                shape.setAttributeNS(null, "cx", messageJSON.dim[0])
+                shape.setAttributeNS(null, "cy", messageJSON.dim[1])
+                shape.setAttributeNS(null, "r",  20)
+                shape.setAttributeNS(null, "fill", "green")
+                svg.appendChild(shape)
+                this.otherPlayes[messageJSON.otherPlayerId]=shape
             }
         }
         this.ws.onerror = event => {
