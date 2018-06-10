@@ -51,8 +51,8 @@ class Index extends React.Component {
         console.log('svgMoveViewPort')
 
         let dim = this.svgGetViewport()
-        if (dim[0] + moveX < this.minX) moveX = dim[0] - this.minX
-        if (dim[1] + moveY < this.minY) moveY = dim[1] - this.minY
+        if (dim[0] + moveX < this.minX) moveX = this.minX - dim[0]
+        if (dim[1] + moveY < this.minY) moveY = this.minY - dim[1]
         if (dim[0] + dim[2] + moveX > this.maxX) moveX = this.maxX - dim[0] - dim[2]
         if (dim[1] + dim[3] + moveY > this.maxY) moveY = this.maxY - dim[1] - dim[3]
 
