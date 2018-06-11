@@ -5,11 +5,10 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.svgObject = React.createRef()
-    this.state = {message: 'Target Unknown'}
+    this.state = {message: 'Target Unknown', playerId: 0}
     this.width = 600
     this.ws = null
     this.wsConnected = false
-    this.playerId = 0
     this.sessionId = Math.random() * 1000000
     this.otherPlayes = []
     this.fetchInprogress = false
@@ -17,7 +16,7 @@ class Index extends React.Component {
 
   render = () => {
     return <div>
-      <div style={{height: '40px'}}>{this.state.message}</div>
+      <div style={{height: '40px'}}>Player {this.state.playerId} - {this.state.message}</div>
       <object type="image/svg+xml" data="/static/tubemap.svg" ref={this.svgObject} onLoad={this.svgObjectLoad} onKeyPress={this.handleKeyPress}>
         Your browser does not support SVG
             </object>
@@ -94,13 +93,13 @@ class Index extends React.Component {
     // Eval closeness to target
     if (!this.fetchInprogress) {
       this.fetchInprogress = true
-      fetch(`${config.lambda}${xyArray[0]}/${xyArray[1]}`, { mode: 'cors' })
+      fetch(`${config.lambda}${xyArray[0]}/${xyArray[1]}?playerId=${this.state.playerId}`, { mode: 'cors' })
         .then((response) => {
           this.fetchInprogress = false
           response.json().then(t => { 
             const row = t[0][0]
             this.playerCircle.setAttributeNS(null, 'fill', (row.rank < 5 ? 'red' : (row.rank < 15 ? 'orange' : (row.rank < 40 ? 'yellow' : 'none'))))
-            this.setState(_ => { return { message: `Target: ${row.name} ${row.DIST < 100 ? 'HIT' : ''}` } })
+            this.setState(ps => { return { message: `Target: ${row.name} ${row.DIST < 100 ? 'HIT' : ''}`, playerId: ps.playerId } })
           })
         })
         .catch((error) => {
@@ -114,7 +113,7 @@ class Index extends React.Component {
 
     //sent back positon to websocket
     if (this.wsConnected) this.ws.send(JSON.stringify({
-      otherPlayerId: this.playerId,
+      otherPlayerId: this.state.playerId,
       dim: xyArray
     }))
   }
@@ -168,7 +167,7 @@ class Index extends React.Component {
       let messageJSON = JSON.parse(messageEvent.data)
       if (messageJSON.playerId) {
         console.log(`WS setting playerId: ${messageJSON.playerId}`)
-        this.playerId = messageJSON.playerId
+        this.setState(ps => { return { playerId: messageJSON.playerId, message: ps.message } })
       }
       if (messageJSON.otherPlayerId) {
         console.log(`WS drawing player: ${messageJSON.otherPlayerId}`)
