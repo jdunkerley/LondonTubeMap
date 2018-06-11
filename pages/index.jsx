@@ -5,7 +5,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.svgObject = React.createRef()
-    this.message = ''
+    this.state = {message: 'Target Unknown'}
     this.width = 600
     this.ws = null
     this.wsConnected = false
@@ -17,7 +17,7 @@ class Index extends React.Component {
 
   render = () => {
     return <div>
-      <div style={{height: '40px'}}>{this.message}</div>
+      <div style={{height: '40px'}}>{this.state.message}</div>
       <object type="image/svg+xml" data="/static/tubemap.svg" ref={this.svgObject} onLoad={this.svgObjectLoad} onKeyPress={this.handleKeyPress}>
         Your browser does not support SVG
             </object>
@@ -48,6 +48,7 @@ class Index extends React.Component {
     if (stroke) shape.setAttributeNS(null, 'stroke', stroke)
     if (fill) shape.setAttributeNS(null, 'fill', fill)
     shape.setAttributeNS(null, 'fill-opacity', '0.5')
+    shape.setAttributeNS(null, 'stroke-width', '2')
 
     svg.appendChild(shape)
 
@@ -74,10 +75,10 @@ class Index extends React.Component {
 
   svgMoveViewPort = (moveX, moveY) => {
     let dim = this.svgGetViewport()
-    if (dim[0] + moveX < this.minX) moveX = this.minX - dim[0]
-    if (dim[1] + moveY < this.minY) moveY = this.minY - dim[1]
-    if (dim[0] + dim[2] + moveX > this.maxX) moveX = this.maxX - dim[0] - dim[2]
-    if (dim[1] + dim[3] + moveY > this.maxY) moveY = this.maxY - dim[1] - dim[3]
+    if (dim[0] + moveX < (this.minX - dim[2] / 2)) moveX = (this.minX - dim[2] / 2) - dim[0]
+    if (dim[1] + moveY < (this.minY - dim[3] / 2)) moveY = (this.minY - dim[3] / 2) - dim[1]
+    if (dim[0] + dim[2] + moveX > (this.maxX + dim[2] / 2)) moveX = (this.maxX + dim[2] / 2) - dim[0] - dim[2]
+    if (dim[1] + dim[3] + moveY > (this.maxY + dim[3] / 2)) moveY = (this.maxY + dim[3] / 2) - dim[1] - dim[3]
 
     const svg = this.svgObject.current.contentDocument.querySelector('svg')
     svg.setAttribute('viewBox', `${dim[0] + moveX} ${dim[1] + moveY} ${dim[2]} ${dim[3]}`)
@@ -87,7 +88,7 @@ class Index extends React.Component {
       this.playerCircle.setAttributeNS(null, 'cx', xyArray[0])
       this.playerCircle.setAttributeNS(null, 'cy', xyArray[1])
     } else {
-      this.playerCircle = this.svgCreateCircle(xyArray[0], xyArray[1], 15, 'black')
+      this.playerCircle = this.svgCreateCircle(xyArray[0], xyArray[1], 10, 'black')
     }
 
     // Eval closeness to target
@@ -98,9 +99,8 @@ class Index extends React.Component {
           this.fetchInprogress = false
           response.json().then(t => { 
             const row = t[0][0]
-            this.message = `Target: ${row.name}`
             this.playerCircle.setAttributeNS(null, 'fill', (row.rank < 5 ? 'red' : (row.rank < 15 ? 'orange' : (row.rank < 40 ? 'yellow' : 'none'))))
-            this.render()
+            this.setState(_ => { return { message: `Target: ${row.name} ${row.DIST < 100 ? 'HIT' : ''}` } })
           })
         })
         .catch((error) => {
