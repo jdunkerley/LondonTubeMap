@@ -5,6 +5,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props)
     this.svgObject = React.createRef()
+    this.message = ''
     this.width = 600
     this.ws = null
     this.wsConnected = false
@@ -16,6 +17,7 @@ class Index extends React.Component {
 
   render = () => {
     return <div>
+      <div style={{height: '40px'}}>{this.message}</div>
       <object type="image/svg+xml" data="/static/tubemap.svg" ref={this.svgObject} onLoad={this.svgObjectLoad} onKeyPress={this.handleKeyPress}>
         Your browser does not support SVG
             </object>
@@ -38,13 +40,14 @@ class Index extends React.Component {
     const svg = this.svgObject.current.contentDocument.querySelector('svg')
     if (!svg) return null
 
-    const svgns = "http://www.w3.org/2000/svg"
-    const shape = document.createElementNS(svgns, "circle")
-    shape.setAttributeNS(null, "cx", x)
-    shape.setAttributeNS(null, "cy", y)
-    shape.setAttributeNS(null, "r", r)
-    if (stroke) shape.setAttributeNS(null, "stroke", stroke)
-    if (fill) shape.setAttributeNS(null, "fill", fill)
+    const svgns = 'http://www.w3.org/2000/svg'
+    const shape = document.createElementNS(svgns, 'circle')
+    shape.setAttributeNS(null, 'cx', x)
+    shape.setAttributeNS(null, 'cy', y)
+    shape.setAttributeNS(null, 'r', r)
+    if (stroke) shape.setAttributeNS(null, 'stroke', stroke)
+    if (fill) shape.setAttributeNS(null, 'fill', fill)
+    shape.setAttributeNS(null, 'fill-opacity', '0.5')
 
     svg.appendChild(shape)
 
@@ -81,25 +84,30 @@ class Index extends React.Component {
 
     const xyArray = [dim[0] + moveX + dim[2] / 2, dim[1] + moveY + dim[3] / 2]
     if (this.playerCircle) {
-      this.playerCircle.setAttributeNS(null, "cx", xyArray[0])
-      this.playerCircle.setAttributeNS(null, "cy", xyArray[1])
+      this.playerCircle.setAttributeNS(null, 'cx', xyArray[0])
+      this.playerCircle.setAttributeNS(null, 'cy', xyArray[1])
     } else {
-      this.playerCircle = this.svgCreateCircle(xyArray[0], xyArray[1], 5, "black")
+      this.playerCircle = this.svgCreateCircle(xyArray[0], xyArray[1], 15, 'black')
     }
 
     // Eval closeness to target
     if (!this.fetchInprogress) {
       this.fetchInprogress = true
-      window.fetch(`${config.lambda}${xyArray[0]}/${xyArray[1]}`, { mode: 'no-cors' })
-        .then((body) => {
+      fetch(`${config.lambda}${xyArray[0]}/${xyArray[1]}`, { mode: 'cors' })
+        .then((response) => {
           this.fetchInprogress = false
-          console.log(body)
+          response.json().then(t => { 
+            const row = t[0][0]
+            this.message = `Target: ${row.name}`
+            this.playerCircle.setAttributeNS(null, 'fill', (row.rank < 5 ? 'red' : (row.rank < 15 ? 'orange' : (row.rank < 40 ? 'yellow' : 'none'))))
+            this.render()
+          })
         })
         .catch((error) => {
           this.fetchInprogress = false
           console.error(error)
           if (this.playerCircle) {
-            this.playerCircle.setAttributeNS(null, "stroke", "black")
+            this.playerCircle.setAttributeNS(null, 'fill', 'none')
           }
         })
     }
@@ -115,7 +123,7 @@ class Index extends React.Component {
     console.log('resizeSVG')
     const current = this.svgObject.current
 
-    current.height = window.innerHeight - 50
+    current.height = window.innerHeight - 90
     current.width = window.innerWidth - 50
     const bBox = [current.width, current.height]
 
@@ -152,37 +160,34 @@ class Index extends React.Component {
     console.log(config)
     this.ws = new WebSocket(config.websocket + this.sessionId)
     this.ws.onopen = event => {
-      console.log('connection established')
+      console.log('WS connection established')
       this.wsConnected = true
     }
     this.ws.onmessage = messageEvent => {
-      console.log("got message: " + messageEvent.data)
+      console.log(`WS message: ${messageEvent.data}`)
       let messageJSON = JSON.parse(messageEvent.data)
       if (messageJSON.playerId) {
-        console.log("setting playerId: " + messageJSON.playerId)
+        console.log(`WS setting playerId: ${messageJSON.playerId}`)
         this.playerId = messageJSON.playerId
       }
       if (messageJSON.otherPlayerId) {
-        console.log("drawing player: " + messageJSON.otherPlayerId)
+        console.log(`WS drawing player: ${messageJSON.otherPlayerId}`)
         
         if (this.otherPlayes[messageJSON.otherPlayerId]) {
-          this.otherPlayes[messageJSON.otherPlayerId].setAttributeNS(null, "cx", messageJSON.dim[0])
-          this.otherPlayes[messageJSON.otherPlayerId].setAttributeNS(null, "cy", messageJSON.dim[1])
+          this.otherPlayes[messageJSON.otherPlayerId].setAttributeNS(null, 'cx', messageJSON.dim[0])
+          this.otherPlayes[messageJSON.otherPlayerId].setAttributeNS(null, 'cy', messageJSON.dim[1])
         } else {
-          this.otherPlayes[messageJSON.otherPlayerId] = this.svgCreateCircle(messageJSON.dim[0], messageJSON.dim[1], 10, "none", "grey")
+          this.otherPlayes[messageJSON.otherPlayerId] = this.svgCreateCircle(messageJSON.dim[0], messageJSON.dim[1], 10, 'darkgreen', 'green')
         }
       }
     }
     this.ws.onerror = event => {
-      console.log("error: " + event)
+      console.log(`WS error: ${event}`)
     }
     this.ws.onclose = closeEvent => {
       console.log('connection closed')
       this.wsConnected = false
     }
-  }
-
-  componentWillUnmount = () => {
   }
 }
 
