@@ -79,7 +79,7 @@ class Index extends React.Component {
     const svg = this.svgObject.current.contentDocument.querySelector('svg')
     svg.setAttribute('viewBox', `${dim[0] + moveX} ${dim[1] + moveY} ${dim[2]} ${dim[3]}`)
 
-    const xyArray = [dim[0] + moveX + dim[2] / 2, dim[1] + moveX + dim[3] / 2]
+    const xyArray = [dim[0] + moveX + dim[2] / 2, dim[1] + moveY + dim[3] / 2]
     if (this.playerCircle) {
       this.playerCircle.setAttributeNS(null, "cx", xyArray[0])
       this.playerCircle.setAttributeNS(null, "cy", xyArray[1])
@@ -94,6 +94,13 @@ class Index extends React.Component {
         .then((body) => {
           this.fetchInprogress = false
           console.log(body)
+        })
+        .catch((error) => {
+          this.fetchInprogress = false
+          console.error(error)
+          if (this.playerCircle) {
+            this.playerCircle.setAttributeNS(null, "stroke", "black")
+          }
         })
     }
 
@@ -116,7 +123,7 @@ class Index extends React.Component {
     if (svg) {
       let dim = this.svgGetViewport()
       svg.setAttribute('viewBox', `${dim[0]} ${dim[1]} ${this.width} ${this.width * bBox[1] / bBox[0]}`)
-      console.log(svg.getAttribute('viewBox'))
+      this.svgMoveViewPort(0,0)
     }
 
     this.gamma = undefined
