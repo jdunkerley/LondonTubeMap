@@ -5,6 +5,10 @@ class Index extends React.Component {
         super(props)
         this.svgObject = React.createRef()
         this.width = 600
+        this.ws = null
+        this.playerId = 0
+        this.sessionId = Math.random()*1000000
+        this.otherPlayes = []
     }
 
     render = () => {
@@ -16,7 +20,7 @@ class Index extends React.Component {
     }
 
     handleKeyPress = (ev) => {
-        console.log(`keypress ${ev.key}`)
+        //console.log(`keypress ${ev.key}`)
         if (ev.key === 'ArrowUp') {
             this.svgMoveViewPort(0, -10)
         } else if (ev.key === 'ArrowDown') {
@@ -39,7 +43,7 @@ class Index extends React.Component {
             this.maxY = dim[3] + dim[1]
             console.log(this)
         }
-        return dim;
+        return dim
     }
 
     svgObjectLoad = () => {
@@ -48,7 +52,7 @@ class Index extends React.Component {
     }
 
     svgMoveViewPort = (moveX, moveY) => {
-        console.log('svgMoveViewPort')
+        //console.log('svgMoveViewPort')
 
         let dim = this.svgGetViewport()
         if (dim[0] + moveX < this.minX) moveX = this.minX - dim[0]
@@ -61,6 +65,12 @@ class Index extends React.Component {
 
         // Eval closeness to target
         // Post back to AWS Kinesis
+
+        //sent back positon to websocket
+        let message = {}
+        message.otherPlayerId = this.playerId
+        message.dim = dim
+        this.ws.send(JSON.stringify(message))
     }
 
     resizeSVG = () => {
@@ -99,6 +109,42 @@ class Index extends React.Component {
             })
          }
         window.addEventListener('keydown', this.handleKeyPress)
+
+        //setting up websocket
+        this.ws = new WebSocket("ws://localhost:7070/game/" + this.sessionId)
+        this.ws.onopen = event => {
+            console.log('connection established')
+        }
+        this.ws.onmessage = messageEvent => {
+            console.log("got message: "+messageEvent.data)
+            let messageJSON = JSON.parse(messageEvent.data)
+            if(messageJSON.playerId){
+                console.log("setting playerId: "+messageJSON.playerId)
+                this.playerId = messageJSON.playerId
+            }
+            if(messageJSON.otherPlayerId){           
+                console.log("drawing player: "+messageJSON.otherPlayerId)
+                if(this.otherPlayes[messageJSON.otherPlayerId]) {
+                    this.otherPlayes[messageJSON.otherPlayerId].remove()
+                }
+                var svgns = "http://www.w3.org/2000/svg"
+                const current = this.svgObject.current
+                const svg = current.contentDocument.querySelector('svg')
+                var shape = document.createElementNS(svgns, "circle")
+                shape.setAttributeNS(null, "cx", messageJSON.dim[0])
+                shape.setAttributeNS(null, "cy", messageJSON.dim[1])
+                shape.setAttributeNS(null, "r",  20)
+                shape.setAttributeNS(null, "fill", "green")
+                svg.appendChild(shape)
+                this.otherPlayes[messageJSON.otherPlayerId]=shape
+            }
+        }
+        this.ws.onerror = event => {
+            console.log("error: "+event)
+        }
+        this.ws.onclose = closeEvent => {
+            console.log('connection closed')
+        }
     }
 
     componentWillUnmount = () => {
