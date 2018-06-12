@@ -395,12 +395,23 @@ ORDER BY DIST) s INNER JOIN current_target t ON s.name = t.name;
 END //
 DELIMITER ;
 
+CREATE PROCEDURE score_target(IN inPlayerId INT, IN inName VARCHAR(35), IN inTimestamp DATETIME)
+BEGIN
+  UPDATE target_station SET playerId = inPlayerId, timestamp = inTimestamp WHERE name = inName AND playerId is NULL;
+  SELECT ROW_COUNT() INTO @affectedRows;
+  UPDATE target_station SET playerId = inPlayerId, timestamp = inTimestamp WHERE name = inName AND timestamp > inTimestamp;
+
+  IF @affectedRows > 0 THEN INSERT INTO target_station(name) SELECT s.name FROM stations s left outer join target_station ts on s.name = ts.name WHERE ts.name is null order by rand() limit 1;
+  END IF;
+END;
+
 CREATE USER londontubeuser IDENTIFIED BY 'simplepass123';
 
 GRANT SELECT ON stations TO londontubeuser;
 GRANT SELECT ON current_target TO londontubeuser;
 GRANT EXECUTE ON PROCEDURE new_target TO londontubeuser;
 GRANT EXECUTE ON PROCEDURE target_distance TO londontubeuser;
+GRANT EXECUTE ON PROCEDURE score_target TO londontubeuser;
 
 CALL new_target();
 CALL target_distance(250, 300);

@@ -1,10 +1,9 @@
 {
-  "name": "clientLambda",
+  "name": "scorerLambda",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.255.1",
     "mysql": "^2.15.0"
   }
 }

@@ -97,7 +97,7 @@ class Index extends React.Component {
         .then((response) => {
           this.fetchInprogress = false
           response.json().then(t => { 
-            const row = t[0][0]
+            const row = t[0]
             this.playerCircle.setAttributeNS(null, 'fill', (row.rank < 5 ? 'red' : (row.rank < 15 ? 'orange' : (row.rank < 40 ? 'yellow' : 'none'))))
             this.setState(ps => { return { message: `Target: ${row.name} ${row.DIST < 100 ? 'HIT' : ''}`, playerId: ps.playerId } })
           })
@@ -147,10 +147,10 @@ class Index extends React.Component {
           this.gamma = ev.gamma
         }
 
-        if (ev.gamma - this.gamma > 10) this.svgMoveViewPort(5 + (ev.gamma - this.gamma) / 80 * 20, 0)
-        if (ev.gamma - this.gamma < -10) this.svgMoveViewPort(-5 + (ev.gamma - this.gamma) / 80 * 20, 0)
-        if (ev.beta - this.beta > 10) this.svgMoveViewPort(0, -(5 + (ev.beta - this.beta) / 80 * 20))
-        if (ev.beta - this.beta < -10) this.svgMoveViewPort(0, -(-5 + (ev.beta - this.beta) / 80 * 20))
+        if (ev.gamma - this.gamma > 10) this.svgMoveViewPort(2 + Math.floor((ev.gamma - this.gamma) / 10) * 5, 0)
+        if (ev.gamma - this.gamma < -10) this.svgMoveViewPort(-2 + Math.floor((ev.gamma - this.gamma) / 10) * 5, 0)
+        if (ev.beta - this.beta > 10) this.svgMoveViewPort(0, -(2 + Math.floor((ev.beta - this.beta) / 10) * 5))
+        if (ev.beta - this.beta < -10) this.svgMoveViewPort(0, -(-2 + Math.floor((ev.beta - this.beta) / 10) * 5))
       })
     }
     window.addEventListener('keydown', this.handleKeyPress)
