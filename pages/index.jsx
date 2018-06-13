@@ -1,3 +1,4 @@
+import Head from 'next/head'
 const React = require('react')
 const config = require('../appconfig.js').default
 
@@ -16,7 +17,11 @@ class Index extends React.Component {
 
   render = () => {
     return <div>
-      <div style={{height: '40px'}}>Player {this.state.playerId} - {this.state.message}</div>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="utf-8" />
+      </Head>
+      <div style={{height: '60px'}}><h1>Plr {this.state.playerId} - {this.state.message}</h1></div>
       <object type="image/svg+xml" data="/static/tubemap.svg" ref={this.svgObject} onLoad={this.svgObjectLoad} onKeyPress={this.handleKeyPress}>
         Your browser does not support SVG
             </object>
@@ -99,7 +104,7 @@ class Index extends React.Component {
           response.json().then(t => { 
             const row = t[0]
             this.playerCircle.setAttributeNS(null, 'fill', (row.rank < 5 ? 'red' : (row.rank < 15 ? 'orange' : (row.rank < 40 ? 'yellow' : 'none'))))
-            this.setState(ps => { return { message: `Target: ${row.name} ${row.DIST < 100 ? 'HIT' : ''}`, playerId: ps.playerId } })
+            this.setState(ps => { return { message: `${row.name} ${row.DIST < 100 ? 'HIT' : ''}`, playerId: ps.playerId } })
           })
         })
         .catch((error) => {
