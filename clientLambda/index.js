@@ -2,19 +2,14 @@ const mysql = require('mysql')
 const AWS = require('aws-sdk')
 
 function runSql(sql, callback) {
-    console.log('runSql Invoked')
-
     const config = {
         host     : process.env.MYSQL_HOST,
         user     : process.env.MYSQL_USER || 'londontubeuser',
         password : process.env.MYSQL_PASSWORD,
         database : process.env.MYSQL_DB || 'londontubes'
     }
-    console.log(config)
-
     const connection = mysql.createConnection(config)
 
-    console.log(sql)
     connection.query(sql, (err, rows) => {
         if (err) {
             console.log(err)
@@ -38,9 +33,6 @@ function runSql(sql, callback) {
 } 
 
 exports.handler = (event, context) => {
-    console.log(context)
-    console.log(event)
-
     if (event.pathParameters && event.pathParameters.x && event.pathParameters.y) {
         runSql(`call target_distance(${event.pathParameters.x}, ${event.pathParameters.y})`, (_, response) => {
             if (response.statusCode === 200 && event.queryStringParameters && event.queryStringParameters.playerId) {
@@ -73,16 +65,8 @@ exports.handler = (event, context) => {
 
             context.done(null, response)
         })
-    } else if ((event.path || '').endsWith('current')) {
-        runSql(`select * from current_target`, (_, response) => {
-            if (response.statusCode === 200) {
-                response.body = JSON.stringify(JSON.parse(response.body)[0])
-            }
-            context.done(null, response)
-        })
-    } else if ((event.path || '').endsWith('score')) {
-        runSql(`select * from current_scores`, context.done)
-    } else {
-        runSql(`select * from stations`, context.done)
-    }
+        return
+    } 
+    
+    runSql(`select * from stations`, context.done)
 }

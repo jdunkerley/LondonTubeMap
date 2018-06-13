@@ -1,6 +1,13 @@
 Push-Location $PSScriptRoot
-Compress-Archive -Path ".\currentLambda\*" -DestinationPath ".\currentLambda.zip"
+7z a -r currentLambda.zip .\currentLambda\*
 $path = (Get-Item -Path ".\currentLambda.zip").FullName.Replace("\", "/")
-aws lambda create-function --region eu-west-2 --function-name londonTubeCurrentLambda --zip-file "fileb://$path" --handler index.js --runtime nodejs8.10 --role arn:aws:iam::803049121276:role/service-role/londonTubeClientLambdaRole
+$currentEnv = aws lambda get-function-configuration --function-name londonTubeClientLambda | ConvertFrom-Json | Select -expand Environment | Select -expand Variables
+$MYSQL_HOST = $currentEnv.MYSQL_HOST
+$MYSQL_DB = $currentEnv.MYSQL_DB
+$MYSQL_USER = $currentEnv.MYSQL_USER
+$MYSQL_PASSWORD = $currentEnv.MYSQL_PASSWORD
+$currentRole = aws lambda get-function-configuration --function-name londonTubeClientLambda | ConvertFrom-Json | Select -expand Role
+aws lambda create-function --region eu-west-2 --function-name londonTubeCurrentLambda --zip-file "fileb://$path" --handler index.handler --runtime nodejs8.10 --role $currentRole
+aws lambda update-function-configuration --region eu-west-2 --function-name londonTubeCurrentLambda --environment Variables="{MYSQL_HOST=$MYSQL_HOST,MYSQL_PASSWORD=$MYSQL_PASSWORD,MYSQL_USER=$MYSQL_USER,MYSQL_DB=$MYSQL_DB}"
 Remove-Item .\currentLambda.zip
 Pop-Location

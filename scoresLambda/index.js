@@ -26,11 +26,11 @@ function runSql(sql, callback) {
         callback(null, {
             statusCode: 200,
             headers: { 'content-type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-            body: JSON.stringify(rows[0])
+            body: JSON.stringify(rows)
         })
     })
 } 
 
 exports.handler = (event, context) => {
-    runSql(`select * from current_target`, context.done)
+    runSql(`select * from current_scores`, context.done)
 }
