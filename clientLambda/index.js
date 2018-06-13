@@ -38,7 +38,7 @@ exports.handler = (event, context) => {
             if (response.statusCode === 200 && event.queryStringParameters && event.queryStringParameters.playerId) {
                 const body = JSON.parse(response.body)[0][0]
                 response.body = JSON.stringify(JSON.parse(response.body)[0])
-                if (body.DIST < 100) {
+                if (body.DIST < 225) {
                     const kinesis = new AWS.Kinesis({apiVersion: '2013-12-02', region: process.env.KINESIS_REGION})
                     kinesis.putRecord({
                         Data: JSON.stringify({...body, playerId: event.queryStringParameters.playerId, timestamp: new Date().toISOString().substr(0,19).replace('T', ' ') }),

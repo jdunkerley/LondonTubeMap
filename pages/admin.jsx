@@ -14,7 +14,7 @@ class Admin extends React.Component {
         <link rel="stylesheet" type="text/css" href="/static/admin.css" media="screen" />
       </Head>
       <h1>London Tube Race</h1>
-      <img alt="QR Code" src="/static/qrCode.png" style={{margin: '0 auto'}} />
+      <img alt="QR Code" src="https://s3.eu-west-2.amazonaws.com/londontubemapaws-hosting-mobilehub-251210678/static/qrcode.png" style={{margin: '0 auto'}} />
       <svg width="100%" height="500px" ref={this.svgObject}></svg>
       
       <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -50,7 +50,7 @@ class Admin extends React.Component {
       y.rangeRound([height, 0])
 
       g.select(".axis--x").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x))
-      g.select(".axis--y").call(d3.axisLeft(y).ticks(10, "%"))
+      g.select(".axis--y").call(d3.axisLeft(y).ticks(10, ""))
 
       const bars = g.selectAll(".bar").data(theData);
 
